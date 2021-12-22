@@ -1,16 +1,3 @@
-# reproducers
-
-- Configuring a simple Flask API for GET/POST requests
-
-Create a venv with the Flask packages
-```
-# /usr/libexec/platform-python -m venv piprepo
-# source piprepo/bin/activate
-# pip install flask
-```
-
-Create the flask app.py with contents similar to this:
-```
 from flask import Flask
 from flask import request, jsonify
 
@@ -31,13 +18,3 @@ def post_logfile():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
-```
-
-Run the Flask APP and make GET/POST Requests
-```
-FLASK_APP=app flask run -p 8080
-```
-To define the ip for the app, run as follows:
-```
-FLASK_APP=app flask run -h 192.168.1.x -p 8080
-```
