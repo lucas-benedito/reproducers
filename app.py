@@ -1,3 +1,4 @@
+import re
 from flask import Flask
 from flask import request, jsonify
 
@@ -10,11 +11,13 @@ def post_logfile():
             final = str(data.readlines())
         return "OK"
     elif request.method == 'POST':
-        data = str(request.json)
+        if request.json:
+            data = str(request.json)
+        if request.values:
+            data = str(request.values)
         with open('/tmp/test.txt', 'w') as final:
             final.write(data)
-        return "Ok"
-
+        return data
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=9090)
