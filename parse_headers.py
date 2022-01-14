@@ -11,3 +11,7 @@ def response(flow):
     print("-"*50 + "response headers:")
     for k, v in flow.response.headers.items():
         print("%-20s: %s" % (k.upper(), v))
+
+    print("-"*50 + "My tests:")
+    print(f"RESPONSE: {flow.response.get_text()}")
+    print("-"*50)
