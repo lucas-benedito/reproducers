@@ -10,7 +10,7 @@ import sys
 def preliminary_checks():
     """Verify if the input file exists"""
     if len(sys.argv) != 2:
-        print(f"No parameters provided. \nusage: python harparser.py haranalysis.har")
+        print(f"No parameters provided. \nusage: harparser.py haranalysis.har")
         sys.exit(1)
     if sys.argv[1]:
         if (not Path(sys.argv[1]).is_file()):
@@ -32,8 +32,10 @@ def processHarData(harData):
             if 'postData' in info['request'].keys():
                 SResponse_out = info['request']['postData']['text']
                 print(f"""SAML Response: \n{SResponse_out}\n""")
-                deflated_text = urllib.parse.unquote_plus(SResponse_out).replace('SAMLResponse=', '')
-                root = etree.fromstring(base64.b64decode(deflated_text))
+                deflated_text = str(urllib.parse.unquote_plus(SResponse_out).replace('SAMLResponse=', ''))
+                spl_word = "&RelayState="
+                deflated_text_cleanup = deflated_text.split(spl_word, 1)[0]
+                root = etree.fromstring(base64.b64decode(deflated_text_cleanup))
                 print(etree.tostring(root, pretty_print=True).decode())
                 continue
             
