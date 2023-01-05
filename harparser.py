@@ -32,9 +32,9 @@ def processHarData(harData):
             if 'postData' in info['request'].keys():
                 SResponse_out = info['request']['postData']['text']
                 print(f"""SAML Response: \n{SResponse_out}\n""")
-                deflated_text = str(urllib.parse.unquote_plus(SResponse_out).replace('SAMLResponse=', ''))
-                spl_word = "&RelayState="
-                deflated_text_cleanup = deflated_text.split(spl_word, 1)[0]
+                deflated_text = str(urllib.parse.unquote_plus(SResponse_out))
+                spl_word = "&"
+                deflated_text_cleanup = str([SAMLResponse for SAMLResponse in deflated_text.split(spl_word, 1) if "SAMLResponse" in SAMLResponse and "RelayState" not in SAMLResponse]).replace('SAMLResponse=', '')
                 root = etree.fromstring(base64.b64decode(deflated_text_cleanup))
                 print(etree.tostring(root, pretty_print=True).decode())
                 continue
